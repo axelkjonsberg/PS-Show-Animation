@@ -1,11 +1,11 @@
 # Based on gist by @WilelmRB: https://gist.github.com/WillemRB/5eb18301462ed6eb23bf
 
 $animationsScriptPath = Join-Path -Path $PSScriptRoot -ChildPath "Animations.ps1"
-. $animationsScriptPath
+.$animationsScriptPath
 
 function Show-Animation {
     param(
-        [ScriptBlock]$scriptBlock
+        [scriptblock]$scriptBlock
     )
 
     $cursorTop = [Console]::CursorTop
@@ -23,8 +23,8 @@ function Show-Animation {
 
         while ($job.JobStateInfo.State -eq "Running") {
             foreach ($frame in $frames) {
-                Write-Host "$frame" -NoNewLine
-                [Console]::SetCursorPosition(0, $cursorTop)
+                Write-Host "$frame" -NoNewline
+                [Console]::SetCursorPosition(0,$cursorTop)
 
                 Start-Sleep -Milliseconds $frameInterval
             }
@@ -37,14 +37,14 @@ function Show-Animation {
         [Console]::CursorVisible = $true
 
         # Clear the line where the animation was displayed
-        [Console]::SetCursorPosition(0, $cursorTop)
+        [Console]::SetCursorPosition(0,$cursorTop)
         Write-Host (" " * $host.UI.RawUI.WindowSize.Width) -NoNewline
 
         # Return the cursor to the start of the line and display the result
-        [Console]::SetCursorPosition(0, $cursorTop)
+        [Console]::SetCursorPosition(0,$cursorTop)
         Write-Host $result
     }
 }
 
-Set-Alias -Name "sa" -Value "Show-Animation"
-Export-ModuleMember -Function Show-Animation -Alias sa
+Set-Alias -Name sa -Value Show-Animation
+Export-ModuleMember -Function 'Show-Animation' -Alias 'sa'
